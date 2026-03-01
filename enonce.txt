@@ -1,0 +1,41 @@
+## Exercice : Charge Hero – City Builder ⚡
+
+**Thème**  
+Tu incarnes un **Charge Hero**, super-héros chargé de construire et gérer une mini-ville électrique. Ta mission : placer des bornes de recharge, les entretenir et éviter les pannes pour garder la ville "énergisée" !
+
+**Description fonctionnelle (MVP)**  
+Crée une petite application fullstack interactive avec :
+
+- Une **grille 2D de 40×20 cases** représentant une vue de ville (style jeu de plateau 2D interactif ou un jeu de stratégie léger).
+- Chaque case peut accueillir **une borne de recharge** (icône, emoji ou mini-illustration personnalisée : ⚡ / 🔌 / ⚠️).
+- Les bornes ont un **état** : `disponible`, `en_charge`, `en_panne`.
+- Actions possibles :
+  - **Créer** une borne → clic sur une case vide → choix d’un nom (optionnel) → apparition avec petite animation.
+  - **Supprimer** une borne → clic droit ou bouton dédié.
+  - **Entretenir / Réparer** → si la borne est en panne, clic pour lancer une réparation (animation de progression 1–3 secondes) → repasse en `disponible`.
+  - **Changements d’état dynamiques** → les bornes changent d’état de façon semi-aléatoire (ex. : toutes les 5–10 secondes, une ou plusieurs bornes random passent en `en_charge` ou `en_panne`). Ces changements, ainsi que les stats globales (ex. : nombre de bornes actives, score énergie totale, pourcentage de couverture de la ville), doivent être notifiés en temps réel via **WebSocket**.
+- Petit bonus fun (optionnel mais très apprécié) :
+  - Notifications toast ou pop-up humoristiques et stylées (« Une Tesla affamée arrive ! », « Panne causée par un écureuil électrique ! »).
+  - Un compteur / score d’énergie de la ville visible en permanence.
+
+**Exigences graphiques et UX (éléments clés pour évaluer ta créativité et ton expertise front)**  
+- Utilise **obligatoirement SASS/SCSS** pour tout ou partie du styling (variables, nesting, mixins, partials… montre-nous ta maîtrise du langage).
+- Tu es libre d’utiliser **Tailwind CSS** en complément si tu le souhaites (ou même exclusivement si tu préfères), mais nous attendons de voir une bonne utilisation de SASS pour évaluer ta capacité à structurer du CSS avancé.
+- Sois **créatif sur le visuel** : thème cohérent "énergie futuriste / mobilité verte", couleurs harmonieuses, effets subtils (ombres, gradients, hover states, transitions CSS, animations légères sur création/réparation/changement d’état).
+- Les icônes des bornes doivent être différenciées graphiquement selon l’état (pas juste un changement de couleur : par ex. étincelles, fumée, halo lumineux…).
+- **Responsive obligatoire** : la grille 40×20 doit rester utilisable et agréable sur mobile, tablette et desktop :
+  - Zoom/pan possible sur mobile (scroll + pinch-to-zoom si tu veux aller plus loin).
+  - Adaptation intelligente : cases plus petites sur petit écran, ou mode "vue d’ensemble" avec mini-map optionnelle, ou virtualisation des cases pour les performances.
+  - Tous les contrôles (boutons, popups, notifications) doivent être touch-friendly et lisibles.
+
+**Stack technique attendue**
+- **Frontend** : **React + TypeScript** **ou** **Angular + TypeScript** (tu choisis librement l’un des deux)
+- **Backend** : **PHP + Symfony** (version récente)
+- **Communication** : API REST JSON pour le CRUD initial, et **WebSocket** pour les changements d’état en temps réel et les stats globales (ex. : Ratchet, Symfony Mercure, ou toute implémentation que tu maîtrises).
+- **Style** : **SASS/SCSS** obligatoire (tu peux combiner avec Tailwind si tu le souhaites)
+- **Stockage** : In-memory (array) ou SQLite (très léger)
+- **Autres contraintes** :
+  - Typage strict (interfaces / types)
+  - Code propre, organisé, commenté quand nécessaire
+  - Gestion des erreurs visible et stylée (frontend + backend)
+  - Performances raisonnables sur la grille 40×20

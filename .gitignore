@@ -1,0 +1,36 @@
+# ======================
+# GLOBAL
+# ======================
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# ======================
+# SYMFONY
+# ======================
+charge-hero-api/vendor/
+charge-hero-api/var/
+charge-hero-api/.env.local
+charge-hero-api/.env.*.local
+
+# ======================
+# NODE / FRONT / WS
+# ======================
+charge-hero-front/node_modules/
+charge-hero-front/dist/
+charge-hero-front/.env.local
+
+charge-hero-ws/node_modules/
+
+# ======================
+# Coverage
+# ======================
+coverage/

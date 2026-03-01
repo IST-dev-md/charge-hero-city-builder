@@ -1,0 +1,368 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ==========================================
+// Sidebar
+// ==========================================
+
+.sidebar {
+  width: $sidebar-width;
+  background: $color-card;
+  border-left: 1px solid $color-border;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  @include mobile {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    z-index: $z-sidebar;
+    animation: slide-in-right 0.25s ease-out;
+    border-left: none;
+  }
+
+  &__header {
+    padding: 16px 20px;
+    border-bottom: 1px solid $color-border;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: $color-text-muted;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    padding: 16px 20px;
+    @include scrollable;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__close {
+    @include button-base;
+    background: transparent;
+    color: $color-text-muted;
+    padding: 4px 8px;
+
+    &:hover {
+      color: $color-text;
+    }
+
+    @include desktop {
+      display: none;
+    }
+  }
+}
+
+// ==========================================
+// Stats panel
+// ==========================================
+
+.stats-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat-card {
+  @include glass-panel;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: border-color $transition-fast;
+
+  &:hover {
+    border-color: $color-text-muted;
+  }
+
+  &__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  &__info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: 0.72rem;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  &__value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &--available .stat-card__icon {
+    background: hsla(155, 100%, 45%, 0.12);
+    color: $color-available;
+  }
+
+  &--charging .stat-card__icon {
+    background: hsla(195, 100%, 50%, 0.12);
+    color: $color-charging;
+  }
+
+  &--out_of_order .stat-card__icon {
+    background: hsla(15, 90%, 55%, 0.12);
+    color: $color-out-of-order;
+  }
+
+  &--energy .stat-card__icon {
+    background: hsla(50, 100%, 50%, 0.12);
+    color: hsl(50, 100%, 55%);
+  }
+
+  &--total .stat-card__icon {
+    background: hsla(220, 15%, 40%, 0.15);
+    color: $color-text-muted;
+  }
+}
+
+// ==========================================
+// Sidebar buttons
+// ==========================================
+
+.sidebar-btn {
+  @include button-base;
+  width: 100%;
+
+  &--simulate {
+    background: hsla(195, 100%, 50%, 0.12);
+    color: $color-charging;
+    border: 1px solid hsla(195, 100%, 50%, 0.3);
+
+    &:hover:not(:disabled) {
+      background: hsla(195, 100%, 50%, 0.2);
+      box-shadow: $glow-charging;
+    }
+  }
+
+  &--primary {
+    background: $color-available;
+    color: $color-bg-dark;
+
+    &:hover:not(:disabled) {
+      filter: brightness(1.1);
+      box-shadow: $glow-available;
+    }
+  }
+  &--danger {
+    background: hsla(15, 90%, 55%, 0.12);
+    color: $color-out-of-order;
+    border: 1px solid hsla(15, 90%, 55%, 0.3);
+
+    &:hover:not(:disabled) {
+      background: hsla(15, 90%, 55%, 0.2);
+      box-shadow: $glow-danger;
+    }
+  }
+}
+
+// ==========================================
+// Station detail panel
+// ==========================================
+
+.station-detail {
+  @include glass-panel;
+  padding: 20px;
+  animation: fade-in 0.2s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__coords {
+    font-size: 0.75rem;
+    color: $color-text-muted;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__status {
+    &--available { @include status-badge(hsla(155, 100%, 45%, 0.15), $glow-available); color: $color-available; }
+    &--charging { @include status-badge(hsla(195, 100%, 50%, 0.15), $glow-charging); color: $color-charging; }
+    &--out_of_order { @include status-badge(hsla(15, 90%, 55%, 0.15), $glow-danger); color: $color-out-of-order; }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__label {
+    font-size: 0.72rem;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: hsla(220, 15%, 12%, 0.8);
+    border: 1px solid $color-border;
+    border-radius: 6px;
+    color: $color-text;
+    outline: none;
+    transition: border-color $transition-fast, box-shadow $transition-fast;
+
+    &:focus {
+      border-color: $color-charging;
+      box-shadow: 0 0 0 2px hsla(195, 100%, 50%, 0.15);
+    }
+
+    &--error {
+      border-color: $color-out-of-order;
+
+      &:focus {
+        border-color: $color-out-of-order;
+        box-shadow: 0 0 0 2px hsla(15, 90%, 55%, 0.15);
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__error {
+    font-size: 0.72rem;
+    color: $color-out-of-order;
+    font-weight: 500;
+  }
+
+  &__status-selector {
+    display: flex;
+    gap: 4px;
+  }
+
+  &__status-option {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 4px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: hsla(220, 15%, 12%, 0.5);
+    color: $color-text-muted;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover:not(:disabled) {
+      background: hsla(220, 15%, 15%, 0.8);
+    }
+
+    &--active {
+      border-color: $color-border;
+      color: $color-text;
+    }
+
+    &--available.station-detail__status-option--active {
+      border-color: hsla(155, 100%, 45%, 0.4);
+      background: hsla(155, 100%, 45%, 0.1);
+      color: $color-available;
+    }
+
+    &--charging.station-detail__status-option--active {
+      border-color: hsla(195, 100%, 50%, 0.4);
+      background: hsla(195, 100%, 50%, 0.1);
+      color: $color-charging;
+    }
+
+    &--out_of_order.station-detail__status-option--active {
+      border-color: hsla(15, 90%, 55%, 0.4);
+      background: hsla(15, 90%, 55%, 0.1);
+      color: $color-out-of-order;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+  }
+}
+
+// ==========================================
+// WS indicator
+// ==========================================
+
+.ws-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $color-text-muted;
+
+  &__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: $color-text-muted;
+  }
+
+  &--live &__dot {
+    background: $color-available;
+    animation: ws-live 2s ease-in-out infinite;
+    box-shadow: 0 0 6px hsla(155, 100%, 45%, 0.5);
+  }
+
+  &--live {
+    color: $color-available;
+  }
+
+  &--offline &__dot {
+    background: $color-out-of-order;
+  }
+
+  &--offline {
+    color: $color-out-of-order;
+  }
+}
